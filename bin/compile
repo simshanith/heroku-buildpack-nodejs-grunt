@@ -180,12 +180,14 @@ echo "export PATH=\"\$HOME/bin:\$HOME/node_modules/.bin:\$PATH\"" > $BUILD_DIR/.
 
 if [ -f $BUILD_DIR/grunt.js ]; then
   echo "-----> Found gruntfile, running grunt heroku task"
-  $BUILD_DIR/node_modules/grunt/bin/grunt heroku
+  alias grunt='$BUILD_DIR/node_modules/grunt/bin/grunt heroku'
+  grunt heroku
 elif [ -f $BUILD_DIR/Gruntfile.js ] || [ -f $BUILD_DIR/Gruntfile.coffee ]; then
   echo "-----> Found gruntfile, installing grunt-cli"
   run_npm "install --production grunt-cli"
-  echo "-----> grunt-cli installed, running grunt heroku task"
-  $BUILD_DIR/node_modules/grunt-cli/bin/grunt heroku
+  echo "-----> grunt-cli installed, aliasing grunt & running grunt heroku task"
+  alias grunt='$BUILD_DIR/node_modules/grunt-cli/bin/grunt'
+  grunt heroku
 else
   echo "-----> No gruntfile (grunt.js) found"
 fi
